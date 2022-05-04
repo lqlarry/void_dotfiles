@@ -1,0 +1,19 @@
+# .aliases - Aliases for bash
+
+alias v='vim'
+alias ls='ls -a --color=auto'
+alias ea='vim ~/.aliases && source .bashrc'
+alias eb='vim ~/.bashrc && source .bashrc'
+
+### Void
+#
+# search
+alias qfind='xbps-query -f' ## MUST USE CORRECT NAME OF PROGRAM ##
+alias qse='xbps-query -Rs'
+
+alias inny='sudo xbps-install'
+alias uppy='sudo xbps-install -Su'
+alias outty='sudo xbps-remove'
+
+neofetch
+

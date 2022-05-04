@@ -1,0 +1,43 @@
+-- http://projects.haskell.org/xmobar/
+-- install xmobar with these flags: --flags="with_alsa" --flags="with_mpd" --flags="with_xft"  OR --flags="all_extensions"
+-- you can find weather location codes here: http://weather.noaa.gov/index.html
+
+Config { font    = "xft:Hermit:pixelsize=11:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Hack Nerd Font:pixelsize=14:antialias=true:hinting=true" 
+       , "xft:Hack Nerd Font:pixelsize=15:antialias=true:hinting=true" 
+       ]
+       --, bgColor = "#2e3440"
+       , bgColor = "yellow"
+       , fgColor = "#d8dee9"
+       , alpha = 25
+       , position = TopW L 100 
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , iconRoot     = ".xmonad/xpm/"  -- default: "."
+       , commands = [ 
+
+                      -- Weather Palm Springs
+                      Run Weather "KPSP" [ "--template", "<fn=1>\xe34d</fn>  <skyCondition> & <tempF>°F "
+                      ] 36000
+                    , Run MPD 
+                    [ "-t", "<artist> — <title> <statei>", "--"
+                    , "-P", ">>", "-Z", "||"
+                    , "--host", "127.0.0.1"
+                    ] 10
+                    , Run Com ".local/bin/updates" [] "upd" 36000
+                      -- Time and date
+                    , Run Date "<fn=1>\xf64f</fn> %l:%M %p (%a, %b %d)" "date" 50
+                      -- Cpu usage in percent
+                    , Run Cpu ["-t", "<fn=2>\xf303</fn>  CPU: (<total>%)","-H","50","--high","red"] 20
+                      -- Memory
+                    , Run Memory ["-t", "<fn=1>\xe712</fn> MEM: <used>M (<usedratio>%)"] 20
+                      -- Clickable Wrokspaces
+                    , Run UnsafeStdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %UnsafeStdinReader% }{ <fc=#8be9fd>%mpd% </fc><fc=#ffd888>%KPSP%</fc><fc=#77d35f>%date% </fc>"
+       }
+
